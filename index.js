@@ -6,9 +6,13 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
+const sequelize = require('./database/database');
+
 app.use(bodyParser.json());
 app.use(cors());
 
-app.listen(PORT, () => {
-    console.log(`Server is listening on PORT ${PORT}`);
-});
+sequelize
+    .sync()
+    .then(() => {
+        app.listen(PORT);
+    })
