@@ -1,4 +1,4 @@
-const indexRoutes = require('./index');
+const indexRoutes = require('./indexRoutes');
 
 module.exports = class Routes {
     constructor(app) {

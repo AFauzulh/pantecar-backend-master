@@ -9,8 +9,11 @@ const app = express();
 const Routes = require('./routes/Router');
 
 // Database
-const sequelize = require('./database/database');
+const { sequelize } = require('./database/database');
+const ModelBuilder = require('./models/Builder/ModelBuilder');
+const modelBuilder = new ModelBuilder();
 
+// Middleware
 app.use(bodyParser.json());
 app.use(cors());
 
@@ -28,7 +31,7 @@ app.use((error, req, res, next) => {
 });
 
 sequelize
-    .sync()
+    .sync({ force: true })
     .then(() => {
         app.listen(PORT);
     });
