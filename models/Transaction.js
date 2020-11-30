@@ -17,7 +17,7 @@ Transaction.init({
         type: DataTypes.DATEONLY,
         allowNull: false
     },
-    total_harga: {
+    total_price: {
         type: DataTypes.DOUBLE,
         allowNull: false
     },
