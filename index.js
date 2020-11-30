@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 // Routes
-const Routes = require('./routes/Router');
+const RouterBuilder = require('./routes/Builder/RouterBuilder');
 
 // Database
 const { sequelize } = require('./database/database');
@@ -17,7 +17,7 @@ const modelBuilder = new ModelBuilder();
 app.use(bodyParser.json());
 app.use(cors());
 
-const routes = new Routes(app);
+const routes = new RouterBuilder(app);
 
 app.use((error, req, res, next) => {
     console.log(error);
