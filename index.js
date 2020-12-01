@@ -1,9 +1,19 @@
+const path = require('path');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+
+// File Upload Handler
+const { FileUploadHelper } = require('./helpers/file-upload-helper');
+const fileUploadHelper = new FileUploadHelper(app)
+
+// Static Files
+app.use("/data", express.static(path.join(__dirname, 'data')));
 
 // Routes
 const RouterBuilder = require('./routes/Builder/RouterBuilder');
@@ -17,6 +27,7 @@ const modelBuilder = new ModelBuilder();
 app.use(bodyParser.json());
 app.use(cors());
 
+// Routes
 const routes = new RouterBuilder(app);
 
 app.use((error, req, res, next) => {
