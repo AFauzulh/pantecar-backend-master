@@ -5,4 +5,6 @@ const adminAPI = require('../api/v1/admin');
 
 router.get('/admins', adminAPI.getAll);
 
+router.post('/verify-user', adminAPI.verifyUser);
+
 module.exports = router;

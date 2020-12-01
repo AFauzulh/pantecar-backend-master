@@ -1,4 +1,5 @@
 const Admin = require('../../models/Admin');
+const User = require('../../models/User');
 
 exports.getAll = async (req, res, next) => {
     try {
@@ -31,7 +32,7 @@ exports.getById = async (req, res, next) => {
     try {
         const admin = await Admin.findByPk(id);
 
-        if (admin.length <= 0) {
+        if (!admin) {
             const error = new Error("no admin found !");
             error.statusCode = 404;
             console.log(error);
@@ -41,6 +42,52 @@ exports.getById = async (req, res, next) => {
         res.status(200).json({
             data: {
                 admin: admin
+            }
+        });
+
+    } catch (err) {
+        if (!err.statuscode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
+
+exports.verifyUser = async (req, res, next) => {
+    const { userId, adminId } = req.body;
+
+    try {
+        const foundedUser = await User.findByPk(userId);
+        const foundedAdmin = await Admin.findByPk(adminId);
+
+        if (!foundedUser) {
+            const error = new Error("user not found !");
+            error.statusCode = 404;
+            console.log(error);
+            throw error;
+        } else {
+            if (foundedUser.is_verified) {
+                return res.status(400).json({
+                    message: "User has already verified !"
+                });
+            }
+        }
+
+        if (!foundedAdmin) {
+            const error = new Error("admin not registered !");
+            error.statusCode = 404;
+            console.log(error);
+            throw error;
+        }
+
+        foundedUser.is_verified = true;
+        foundedUser.adminIdAdmin = adminId;
+
+        await foundedUser.save();
+
+        res.status(200).json({
+            data: {
+                message: "user verified"
             }
         });
 
