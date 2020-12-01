@@ -10,9 +10,8 @@ User.init({
         allowNull: false,
         primaryKey: true
     },
-    id_card_number: {
-        type: DataTypes.STRING(16),
-        unique: true
+    id_card_url: {
+        type: DataTypes.STRING,
     },
     user_name: {
         type: DataTypes.STRING,
@@ -25,9 +24,6 @@ User.init({
     password: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    driver_license_url: {
-        type: DataTypes.STRING
     },
     is_verified: {
         type: DataTypes.BOOLEAN,
