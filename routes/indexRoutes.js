@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.get("/check", (req, res, next) => {
+router.get("/check", async (req, res, next) => {
     res.status(200).json({
         message: 'OK'
     });
