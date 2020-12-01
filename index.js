@@ -42,8 +42,8 @@ app.use((error, req, res, next) => {
 });
 
 sequelize
-    // .sync()
-    .sync({ force: true })
+    .sync()
+    // .sync({ force: true })
     .then(() => {
         app.listen(PORT);
     });

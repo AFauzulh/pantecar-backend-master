@@ -1,6 +1,7 @@
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const Admin = require('../../models/Admin');
 
 exports.signupUser = async (req, res, next) => {
     const { nameUser, dob, email, password } = req.body;
@@ -19,7 +20,7 @@ exports.signupUser = async (req, res, next) => {
 
         res.status(201).json({
             message: 'user created',
-            user: savedUser
+            user: savedUser.id_user
         });
 
 
@@ -65,6 +66,76 @@ exports.loginUser = async (req, res, next) => {
         res.status(201).json({
             token: token,
             userId: loadedUser.id_user.toString()
+        });
+
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
+
+exports.signupAdmin = async (req, res, next) => {
+    const { name, email, password } = req.body;
+
+    try {
+        const admin = new Admin({
+            admin_name: name,
+            email: email,
+            password: await bcrypt.hash(password, 12)
+        });
+
+        const savedAdmin = await admin.save();
+
+        res.status(201).json({
+            message: 'admin created',
+            admin: savedAdmin.id_admin
+        });
+
+
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
+
+exports.loginAdmin = async (req, res, next) => {
+    const { email, password } = req.body;
+
+    let loadedAdmin;
+
+    try {
+        const admin = await Admin.findOne({ where: { email } });
+
+        if (!admin) {
+            const error = new Error("You are not an admin !");
+            error.statusCode = 401;
+            throw error;
+        }
+
+        loadedAdmin = admin;
+
+        const isPasswordEqual = await bcrypt.compare(password, loadedAdmin.password);
+
+        if (!isPasswordEqual) {
+            const error = new Error("wrong password!");
+            error.statusCode = 401;
+            throw error;
+        }
+
+        const token = jwt.sign({
+            email: loadedAdmin.email,
+            userId: loadedAdmin.id_admin.toString()
+        }, "somesupersecretsecret", {
+            expiresIn: "1h"
+        });
+
+        res.status(201).json({
+            token: token,
+            adminId: loadedAdmin.id_admin.toString()
         });
 
     } catch (err) {
