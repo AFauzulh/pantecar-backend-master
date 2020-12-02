@@ -7,5 +7,7 @@ router.get('/unverified', transactionAPI.getUnverifiedTransactions);
 
 router.post('/', transactionAPI.makeTransaction);
 router.post('/verify', transactionAPI.verifyTransaction);
+router.post('/accept', transactionAPI.acceptTransaction);
+router.post('/reject', transactionAPI.rejectTransaction);
 
 module.exports = router;
