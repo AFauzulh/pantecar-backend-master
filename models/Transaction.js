@@ -1,7 +1,7 @@
 const { DataTypes, Model } = require('sequelize');
 const { sequelize } = require('../database/database');
 
-class Transaction extends Model {  }
+class Transaction extends Model { }
 
 Transaction.init({
     transaction_no: {
@@ -24,6 +24,11 @@ Transaction.init({
     number_of_days_borrowed: {
         type: DataTypes.INTEGER,
         allowNull: false
+    },
+    is_verified: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 
 }, {
