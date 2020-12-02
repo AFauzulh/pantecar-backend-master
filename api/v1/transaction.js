@@ -20,7 +20,7 @@ exports.makeTransaction = async (req, res, next) => {
 
         if (!user || !car || !rentalShop) {
             const error = new Error("invalid inputs");
-            error.statusCode = 404;
+            error.statusCode = 400;
             console.log(error);
             throw error;
         }
@@ -47,6 +47,26 @@ exports.makeTransaction = async (req, res, next) => {
                 transaction: savedTransaction
             }
         });
+    } catch (err) {
+        if (!err.statuscode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
+
+exports.getUnverifiedTransactions = async (req, res, next) => {
+    try {
+        const unverifiedTransactions = await Transaction.findAll({
+            where: { is_verified: false }
+        });
+
+        res.status(200).json({
+            data: {
+                unverifiedTransactions: unverifiedTransactions
+            }
+        });
+
     } catch (err) {
         if (!err.statuscode) {
             err.statusCode = 500;
