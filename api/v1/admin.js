@@ -98,3 +98,24 @@ exports.verifyUser = async (req, res, next) => {
         next(err);
     }
 }
+
+exports.getUnverifiedUsers = async (req, res, next) => {
+    try {
+        const unverifiedUsers = await User.findAll({
+            where: { is_verified: false },
+            attributes: { exclude: ['password'] }
+        });
+
+        res.status(200).json({
+            data: {
+                unverifiedUsers: unverifiedUsers
+            }
+        });
+
+    } catch (err) {
+        if (!err.statuscode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
