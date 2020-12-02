@@ -8,7 +8,7 @@ exports.getById = async (req, res, next) => {
         const foundedCar = await Car.findByPk(id);
 
         if (!foundedCar) {
-            const error = new Error("car not found !");
+            const error = new Error("car not found");
             error.statusCode = 404;
             console.log(error);
             throw error;

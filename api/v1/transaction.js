@@ -74,3 +74,7 @@ exports.getUnverifiedTransactions = async (req, res, next) => {
         next(err);
     }
 }
+
+exports.verifyTransaction = async (req, res, next) => {
+
+};

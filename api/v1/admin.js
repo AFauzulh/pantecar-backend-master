@@ -33,7 +33,7 @@ exports.getById = async (req, res, next) => {
         const admin = await Admin.findByPk(id);
 
         if (!admin) {
-            const error = new Error("no admin found !");
+            const error = new Error("admin not found");
             error.statusCode = 404;
             console.log(error);
             throw error;
@@ -74,7 +74,7 @@ exports.verifyUser = async (req, res, next) => {
         }
 
         if (!foundedAdmin) {
-            const error = new Error("admin not registered !");
+            const error = new Error("admin is not registered !");
             error.statusCode = 404;
             console.log(error);
             throw error;

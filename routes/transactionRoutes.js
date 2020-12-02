@@ -6,5 +6,6 @@ const router = express.Router();
 router.get('/unverified', transactionAPI.getUnverifiedTransactions);
 
 router.post('/', transactionAPI.makeTransaction);
+router.post('/verify', transactionAPI.verifyTransaction);
 
 module.exports = router;

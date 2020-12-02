@@ -12,6 +12,6 @@ router.post('/add-car', fh.getMulter().fields([
     { name: 'images', maxCount: 5 }
 ]), rentalShopAPI.addCar);
 
-router.post('/verify-transaction', rentalShopAPI.verifyTransaction);
+router.post('/create', rentalShopAPI.registerRentalShop);
 
 module.exports = router;
