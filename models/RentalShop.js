@@ -26,6 +26,14 @@ RentalShop.init({
         type: DataTypes.STRING,
         allowNull: false
     },
+    bank_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    bankAccountNo: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     number_of_cars: {
         type: DataTypes.INTEGER,
         allowNull: false,
