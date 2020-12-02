@@ -27,7 +27,7 @@ exports.getAll = async (req, res, next) => {
 }
 
 exports.getById = async (req, res, next) => {
-    const { id } = req.body;
+    const { id } = req.params;
 
     try {
         const admin = await Admin.findByPk(id);

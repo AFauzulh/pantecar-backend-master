@@ -33,8 +33,11 @@ Transaction.init({
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
+    },
+    is_accepted: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
     }
-
 }, {
     sequelize,
     modelName: 'transaction'

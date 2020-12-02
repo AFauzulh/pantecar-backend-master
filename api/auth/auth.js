@@ -19,8 +19,10 @@ exports.signupUser = async (req, res, next) => {
         const savedUser = await user.save();
 
         res.status(201).json({
-            message: 'user created',
-            user: savedUser.id_user
+            data: {
+                message: 'user created',
+                user: savedUser.id_user
+            }
         });
 
 
@@ -64,8 +66,10 @@ exports.loginUser = async (req, res, next) => {
         });
 
         res.status(201).json({
-            token: token,
-            userId: loadedUser.id_user.toString()
+            data: {
+                token: token,
+                userId: loadedUser.id_user.toString()
+            }
         });
 
     } catch (err) {
@@ -89,8 +93,10 @@ exports.signupAdmin = async (req, res, next) => {
         const savedAdmin = await admin.save();
 
         res.status(201).json({
-            message: 'admin created',
-            admin: savedAdmin.id_admin
+            data: {
+                message: 'admin created',
+                admin: savedAdmin.id_admin
+            }
         });
 
 
@@ -134,8 +140,10 @@ exports.loginAdmin = async (req, res, next) => {
         });
 
         res.status(201).json({
-            token: token,
-            adminId: loadedAdmin.id_admin.toString()
+            data: {
+                token: token,
+                adminId: loadedAdmin.id_admin.toString()
+            }
         });
 
     } catch (err) {
