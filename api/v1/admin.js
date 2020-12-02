@@ -5,7 +5,7 @@ exports.getAll = async (req, res, next) => {
     try {
         const admins = await Admin.findAll();
 
-        if (admins.length <= 0) {
+        if (!admins) {
             const error = new Error("no admin found !");
             error.statusCode = 404;
             console.log(error);

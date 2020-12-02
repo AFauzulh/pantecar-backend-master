@@ -7,7 +7,6 @@ exports.registerRentalShop = async (req, res, next) => {
     let isNum = /^\d+$/.test(bankAccountNo);
 
     try {
-
         if (!isNum) {
             const error = new Error("bank account number must contain number only !");
             error.statusCode = 400;
