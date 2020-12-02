@@ -15,7 +15,7 @@ class ModelBuilder {
 
         User.hasMany(Transaction);
         RentalShop.hasMany(Transaction);
-        CarImageUrl.hasMany(Transaction);
+        Car.hasMany(Transaction);
         Admin.hasMany(Transaction);
     }
 }
