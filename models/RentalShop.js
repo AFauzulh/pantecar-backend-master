@@ -10,6 +10,10 @@ RentalShop.init({
         allowNull: false,
         primaryKey: true
     },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     address: {
         type: DataTypes.STRING,
         allowNull: false
