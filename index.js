@@ -8,10 +8,6 @@ const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-// File Upload Handler
-const { FileUploadHelper } = require('./helpers/file-upload-helper');
-const fileUploadHelper = new FileUploadHelper(app)
-
 // Static Files
 app.use("/data", express.static(path.join(__dirname, 'data')));
 

@@ -31,13 +31,12 @@ exports.registerRentalShop = async (req, res, next) => {
         });
 
         rentalShop.userIdUser = loadedUser.id_user
+
         loadedUser.RentalShop = rentalShop
 
         await rentalShop.save()
 
         await loadedUser.save();
-
-        console.log(loadedUser.RentalShop);
 
         res.status(200).json({
             data: {

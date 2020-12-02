@@ -5,7 +5,7 @@ const Admin = require('../../models/Admin');
 
 exports.signupUser = async (req, res, next) => {
     const { nameUser, dob, email, password } = req.body;
-    const ktpUrl = req.file.path.replace("\\", "/");
+    let ktpUrl = req.file.path.replace("\\", "/");;
 
     try {
         const user = new User({
