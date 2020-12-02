@@ -23,7 +23,7 @@ Transaction.init({
     },
     number_of_days_borrowed: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: true
     },
     transfer_image_url: {
         type: DataTypes.STRING,

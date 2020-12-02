@@ -4,6 +4,7 @@ const authRoutes = require('../authRoutes');
 const userRoutes = require('../userRoutes');
 const rentalShopRoutes = require('../rentalShopRoutes');
 const carRoutes = require('../carRoutes');
+const transactionRoutes = require('../transactionRoutes');
 
 module.exports = class Routes {
     constructor(app) {
@@ -14,5 +15,6 @@ module.exports = class Routes {
         app.use("/api/v1/user", userRoutes);
         app.use("/api/v1/rental-shop", rentalShopRoutes);
         app.use("/api/v1/car", carRoutes);
+        app.use("/api/v1/transaction", transactionRoutes);
     }
 }
