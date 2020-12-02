@@ -76,5 +76,51 @@ exports.getUnverifiedTransactions = async (req, res, next) => {
 }
 
 exports.verifyTransaction = async (req, res, next) => {
+    const { transactionId, rentalShopId } = req.body;
+    try {
+        const transaction = await Transaction.findByPk(transactionId);
+        const rentalShop = await RentalShop.findByPk(rentalShopId);
+
+        if (!transaction || !rentalShop) {
+            const error = new Error("invalid input");
+            error.statusCode = 400;
+            console.log(error);
+            throw error;
+        }
+
+        if (transaction.rentalShopIdShop !== rentalShop.id_shop) {
+            const error = new Error("unauthorized rental shop");
+            error.statusCode = 401;
+            console.log(error);
+            throw error;
+        }
+
+        if (transaction.is_verified) {
+            const error = new Error("transaction has already verified");
+            error.statusCode = 400;
+            console.log(error);
+            throw error;
+        }
+
+        transaction.is_verified = true;
+
+        await transaction.save()
+
+        res.status(200).json({
+            data: {
+                message: "verify success",
+                transaction: transaction
+            }
+        });
+
+    } catch (err) {
+        if (!err.statuscode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+};
+
+exports.acceptTransaction = async (req, res, next) => {
 
 };
