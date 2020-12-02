@@ -30,7 +30,7 @@ RentalShop.init({
         type: DataTypes.STRING,
         allowNull: false
     },
-    bankAccountNo: {
+    bank_account_no: {
         type: DataTypes.STRING,
         allowNull: false
     },

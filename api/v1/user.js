@@ -2,9 +2,19 @@ const User = require('../../models/User');
 const RentalShop = require('../../models/RentalShop');
 
 exports.registerRentalShop = async (req, res, next) => {
-    const { userId, name, address, city, province } = req.body;
-    console.log(req.body);
+    const { userId, name, address, city, province, bank, bankAccountNo } = req.body;
+
+    let isNum = /^\d+$/.test(bankAccountNo);
+
     try {
+
+        if (!isNum) {
+            const error = new Error("bank account number must contain number only !");
+            error.statusCode = 400;
+            console.log(error);
+            throw error;
+        }
+
         const loadedUser = await User.findByPk(userId);
 
         if (!loadedUser) {
@@ -15,7 +25,9 @@ exports.registerRentalShop = async (req, res, next) => {
         }
 
         const rentalShop = new RentalShop({
-            name, address, city, province
+            name, address, city, province,
+            bank_name: bank,
+            bank_account_no: bankAccountNo
         });
 
         rentalShop.userIdUser = loadedUser.id_user

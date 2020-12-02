@@ -25,6 +25,10 @@ Transaction.init({
         type: DataTypes.INTEGER,
         allowNull: false
     },
+    transfer_image_url: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
     is_verified: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
