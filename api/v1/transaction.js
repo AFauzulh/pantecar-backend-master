@@ -214,3 +214,36 @@ exports.rejectTransaction = async (req, res, next) => {
         next(err);
     }
 };
+
+exports.uploadPaymentReceipt = async (req, res, next) => {
+    const { transactionId } = req.body;
+    const paymentReceiptUrl = req.file.path.replace("\\", "/");
+
+    try {
+        const foundedTransaction = await Transaction.findByPk(transactionId);
+
+        if (!foundedTransaction) {
+            const error = new Error("Transaction is not valid");
+            error.statusCode = 400;
+            throw error;
+        }
+
+        foundedTransaction.transfer_image_url = paymentReceiptUrl;
+
+        await foundedTransaction.save();
+
+        res.status(200).json({
+            data: {
+                message: 'upload success',
+                transaction_no: foundedTransaction.transaction_no
+            }
+        });
+
+
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+};
