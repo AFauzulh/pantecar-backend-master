@@ -54,7 +54,8 @@ exports.getById = async (req, res, next) => {
 }
 
 exports.verifyUser = async (req, res, next) => {
-    const { userId, adminId } = req.body;
+    const { userId } = req.body;
+    const { adminId } = req;
 
     try {
         const foundedUser = await User.findByPk(userId);
