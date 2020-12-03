@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -27,10 +29,12 @@ exports.signupUser = async (req, res, next) => {
 
 
     } catch (err) {
-        if (!err.statusCode) {
-            err.statusCode = 500;
-        }
-        next(err);
+        fs.unlink(ktpUrl, error => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
     }
 }
 

@@ -1,3 +1,4 @@
+const fs = require('fs');
 const User = require('../../models/User');
 const Car = require('../../models/Car');
 const RentalShop = require('../../models/RentalShop');
@@ -239,11 +240,12 @@ exports.uploadPaymentReceipt = async (req, res, next) => {
             }
         });
 
-
     } catch (err) {
-        if (!err.statusCode) {
-            err.statusCode = 500;
-        }
-        next(err);
+        fs.unlink(paymentReceiptUrl, error => {
+            if (!err.statusCode) {
+                err.statusCode = 500;
+            }
+            next(err);
+        });
     }
 };

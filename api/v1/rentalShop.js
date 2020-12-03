@@ -3,16 +3,13 @@ const Car = require('../../models/Car');
 const CarImageUrl = require('../../models/CarImageUrl');
 const User = require('../../models/User');
 
-exports.verifyTransaction = async (req, res, next) => {
-
-};
-
 exports.addCar = async (req, res, next) => {
     const {
         rentalShopId, carName, carBrand, numberPlate, carType, carTransmission, numberOfSeat, fuelType, farePerDay
     } = req.body;
 
     const carImages = req.files.images;
+    const carImgs = [];
 
     try {
         const rentalShop = await RentalShop.findByPk(rentalShopId);
@@ -44,6 +41,8 @@ exports.addCar = async (req, res, next) => {
                 carIdCar: savedCar.id_car
             });
 
+            carImgs.push(newCarImageUrl.imageUrl);
+
             await newCarImageUrl.save();
         });
 
@@ -63,10 +62,6 @@ exports.addCar = async (req, res, next) => {
         }
         next(err);
     }
-};
-
-exports.getCars = async (req, res, next) => {
-
 };
 
 exports.registerRentalShop = async (req, res, next) => {
