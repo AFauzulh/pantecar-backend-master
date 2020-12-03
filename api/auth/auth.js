@@ -134,7 +134,7 @@ exports.loginAdmin = async (req, res, next) => {
 
         const token = jwt.sign({
             email: loadedAdmin.email,
-            userId: loadedAdmin.id_admin.toString()
+            adminId: loadedAdmin.id_admin.toString()
         }, "somesupersecretsecret", {
             expiresIn: "1h"
         });
