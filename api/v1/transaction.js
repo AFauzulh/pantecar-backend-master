@@ -26,6 +26,13 @@ exports.makeTransaction = async (req, res, next) => {
             throw error;
         }
 
+        if (!user.is_verified) {
+            const error = new Error("user is not verified yet");
+            error.statusCode = 400;
+            console.log(error);
+            throw error;
+        }
+
         const totalDay = (new Date(returnDate).getDate()) - (new Date(borrowDate).getDate());
         const totalPrice = car.fare_per_day * totalDay;
 

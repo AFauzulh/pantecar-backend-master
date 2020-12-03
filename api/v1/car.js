@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const Car = require('../../models/Car');
 const CarImageUrl = require('../../models/CarImageUrl');
 const RentalShop = require('../../models/RentalShop');
@@ -41,7 +43,7 @@ exports.addCar = async (req, res, next) => {
     } = req.body;
 
     const carImages = req.files.images;
-    const carImgs = [];
+    // const carImgs = [];
 
     try {
         const rentalShop = await RentalShop.findByPk(rentalShopId);
@@ -73,7 +75,7 @@ exports.addCar = async (req, res, next) => {
                 carIdCar: savedCar.id_car
             });
 
-            carImgs.push(newCarImageUrl.imageUrl);
+            // carImgs.push(newCarImageUrl.imageUrl);
 
             await newCarImageUrl.save();
         });
@@ -86,7 +88,6 @@ exports.addCar = async (req, res, next) => {
                 car: savedCar
             }
         });
-
     } catch (err) {
         if (!err.statuscode) {
             console.log(err);
