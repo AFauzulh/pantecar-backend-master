@@ -41,7 +41,7 @@ Car.init({
         }
     },
     fuel_type: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         validate: {
             isIn: [['premium', 'pertamax', 'solar']]
