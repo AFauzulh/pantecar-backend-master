@@ -105,6 +105,27 @@ exports.getByRentalShop = async (req, res, next) => {
     }
 }
 
+exports.getByUser = async (req, res, next) => {
+    const { userId } = req;
+    try {
+        const transactions = await Transaction.findAll({
+            where: { userIdUser: userId }
+        });
+
+        res.status(200).json({
+            data: {
+                transactions: transactions
+            }
+        });
+
+    } catch (err) {
+        if (!err.statuscode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
+
 exports.verifyTransaction = async (req, res, next) => {
     const { transactionId, rentalShopId } = req.body;
     try {
