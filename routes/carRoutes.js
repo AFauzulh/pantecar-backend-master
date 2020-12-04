@@ -9,7 +9,7 @@ const fh = new FileUploadHelper()
 const haveRentalShop = require('../middleware/rentalShop-auth');
 
 router.get('/:id', carAPI.getById)
-router.get('/', carAPI.getByLocation)
+router.get('/', carAPI.getByCity)
 
 router.post('/', haveRentalShop, fh.getMulter().fields([
     { name: 'images', maxCount: 5 }

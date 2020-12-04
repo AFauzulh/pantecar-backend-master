@@ -41,14 +41,16 @@ exports.getById = async (req, res, next) => {
     }
 };
 
-exports.getByLocation = async (req, res, next) => {
-    const { location } = req.query;
+exports.getByCity = async (req, res, next) => {
+    const { city } = req.query;
     let foundedCars = [];
+
+    console.log(city);
 
     try {
         const sql = `SELECT * FROM cars WHERE rentalShopIdShop IN (SELECT id_shop FROM rental_shops WHERE rental_shops.city LIKE $1)`
         const [cars, _] = await sequelize.query(sql, {
-            bind: [location]
+            bind: [city]
         });
 
         foundedCars = JSON.parse(JSON.stringify(cars));
