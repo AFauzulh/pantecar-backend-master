@@ -6,6 +6,7 @@ const authAPI = require('../api/auth/auth');
 const { FileUploadHelper } = require('../helpers/file-upload-helper');
 const fh = new FileUploadHelper()
 
+
 router.post('/login-user', authAPI.loginUser);
 router.post('/signup-user', fh.getMulter().single('image'), authAPI.signupUser);
 

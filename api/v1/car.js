@@ -39,17 +39,17 @@ exports.getById = async (req, res, next) => {
 
 exports.addCar = async (req, res, next) => {
     const {
-        rentalShopId, carName, carBrand, numberPlate, carType, carTransmission, numberOfSeat, fuelType, farePerDay
+        carName, carBrand, numberPlate, carType, carTransmission, numberOfSeat, fuelType, farePerDay
     } = req.body;
 
-    const { userId } = req;
+    const { rentalShopId } = req;
 
     const carImages = req.files.images;
     // const carImgs = [];
 
     try {
         const rentalShop = await RentalShop.findByPk(rentalShopId);
-        if (!rentalShop || rentalShop.userIdUser.toString() !== userId.toString()) {
+        if (!rentalShop) {
             const error = new Error("rental shop is not registered!");
             error.statusCode = 404;
             console.log(error);

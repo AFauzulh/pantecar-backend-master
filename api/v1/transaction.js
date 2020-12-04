@@ -64,9 +64,10 @@ exports.makeTransaction = async (req, res, next) => {
 }
 
 exports.getUnverifiedTransactions = async (req, res, next) => {
+    const { rentalShopId } = req;
     try {
         const unverifiedTransactions = await Transaction.findAll({
-            where: { is_verified: false }
+            where: { is_verified: false, rentalShopIdShop: rentalShopId }
         });
 
         res.status(200).json({
@@ -211,6 +212,13 @@ exports.rejectTransaction = async (req, res, next) => {
             throw error;
         }
 
+        if (transaction.is_verified) {
+            const error = new Error("cannot reject verified transaction");
+            error.statusCode = 400;
+            console.log(error);
+            throw error;
+        }
+
         transaction.is_accepted = false;
 
         await transaction.save()
@@ -233,12 +241,19 @@ exports.rejectTransaction = async (req, res, next) => {
 exports.uploadPaymentReceipt = async (req, res, next) => {
     const { transactionId } = req.body;
     const paymentReceiptUrl = req.file.path.replace("\\", "/");
+    const { userId } = req;
 
     try {
         const foundedTransaction = await Transaction.findByPk(transactionId);
 
         if (!foundedTransaction) {
             const error = new Error("Transaction is not valid");
+            error.statusCode = 400;
+            throw error;
+        }
+
+        if (foundedTransaction.userIdUser.toString() !== userId.toString()) {
+            const error = new Error("Action not allowed !");
             error.statusCode = 400;
             throw error;
         }
