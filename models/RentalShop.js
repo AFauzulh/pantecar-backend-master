@@ -42,7 +42,8 @@ RentalShop.init({
 
 }, {
     sequelize,
-    modelName: 'rental_shop'
+    modelName: 'rental_shop',
+    timestamps: false
 });
 
 module.exports = RentalShop;

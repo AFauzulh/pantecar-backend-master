@@ -53,7 +53,8 @@ Car.init({
     }
 }, {
     sequelize,
-    modelName: 'car'
+    modelName: 'car',
+    timestamps: false
 });
 
 module.exports = Car;

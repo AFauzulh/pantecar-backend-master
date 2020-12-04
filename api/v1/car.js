@@ -70,6 +70,9 @@ exports.addCar = async (req, res, next) => {
         });
 
         const savedCar = await newCar.save();
+        rentalShop.number_of_cars = rentalShop.number_of_cars + 1;
+
+        await rentalShop.save();
 
         carImages.forEach(async (cImg) => {
             const newCarImageUrl = new CarImageUrl({

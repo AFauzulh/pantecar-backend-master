@@ -16,7 +16,8 @@ CarImageUrl.init({
     }
 }, {
     sequelize,
-    modelName: 'car_image_url'
+    modelName: 'car_image_url',
+    timestamps: false
 });
 
 module.exports = CarImageUrl;

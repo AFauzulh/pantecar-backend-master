@@ -24,7 +24,8 @@ Admin.init({
     },
 }, {
     sequelize,
-    modelName: 'admin'
+    modelName: 'admin',
+    timestamps: false
 });
 
 module.exports = Admin;

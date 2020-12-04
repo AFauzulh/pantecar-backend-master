@@ -40,7 +40,8 @@ Transaction.init({
     }
 }, {
     sequelize,
-    modelName: 'transaction'
+    modelName: 'transaction',
+    timestamps: false
 })
 
 module.exports = Transaction;
