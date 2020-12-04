@@ -6,6 +6,8 @@ const router = express.Router();
 const { FileUploadHelper } = require('../helpers/file-upload-helper');
 const fh = new FileUploadHelper()
 
-router.post('/create', rentalShopAPI.registerRentalShop);
+const isUserAuth = require('../middleware/user-auth');
+
+router.post('/create', isUserAuth, rentalShopAPI.registerRentalShop);
 
 module.exports = router;

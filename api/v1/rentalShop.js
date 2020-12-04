@@ -2,7 +2,8 @@ const RentalShop = require('../../models/RentalShop');
 const User = require('../../models/User');
 
 exports.registerRentalShop = async (req, res, next) => {
-    const { userId, name, address, city, province, bank, bankAccountNo } = req.body;
+    const { name, address, city, province, bank, bankAccountNo } = req.body;
+    const { userId } = req;
 
     let isNum = /^\d+$/.test(bankAccountNo);
 

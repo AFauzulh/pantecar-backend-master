@@ -6,9 +6,11 @@ const carAPI = require('../api/v1/car');
 const { FileUploadHelper } = require('../helpers/file-upload-helper');
 const fh = new FileUploadHelper()
 
+const isUserAuth = require('../middleware/user-auth');
+
 router.get('/:id', carAPI.getById)
 
-router.post('/', fh.getMulter().fields([
+router.post('/', isUserAuth, fh.getMulter().fields([
     { name: 'images', maxCount: 5 }
 ]), carAPI.addCar)
 

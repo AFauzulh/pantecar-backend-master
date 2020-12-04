@@ -9,10 +9,10 @@ exports.makeTransaction = async (req, res, next) => {
         borrowDate,
         returnDate,
         carId,
-        userId,
         rentalShopId
     } = req.body;
 
+    const { userId } = req;
 
     try {
         const user = await User.findByPk(userId);
