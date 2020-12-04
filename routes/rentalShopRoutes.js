@@ -8,6 +8,8 @@ const fh = new FileUploadHelper()
 
 const isUserAuth = require('../middleware/user-auth');
 
+router.get('/', rentalShopAPI.getAll);
+
 router.post('/create', isUserAuth, rentalShopAPI.registerRentalShop);
 
 module.exports = router;

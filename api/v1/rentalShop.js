@@ -1,6 +1,24 @@
 const RentalShop = require('../../models/RentalShop');
 const User = require('../../models/User');
 
+exports.getAll = async (req, res, next) => {
+    try {
+        const rentalShops = await RentalShop.findAll();
+
+        res.status(200).json({
+            data: {
+                rentalShops: rentalShops
+            }
+        });
+
+    } catch (err) {
+        if (!err.statuscode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
+
 exports.registerRentalShop = async (req, res, next) => {
     const { name, address, city, province, bank, bankAccountNo } = req.body;
     const { userId } = req;
