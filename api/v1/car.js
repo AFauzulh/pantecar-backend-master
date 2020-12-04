@@ -1,12 +1,27 @@
-const { json } = require('body-parser');
-const fs = require('fs');
-
-const { Op, QueryTypes } = require('sequelize');
 const { sequelize } = require('../../database/database');
 
 const Car = require('../../models/Car');
 const CarImageUrl = require('../../models/CarImageUrl');
 const RentalShop = require('../../models/RentalShop');
+
+exports.getAll = async (req, res, next) => {
+    try {
+        const cars = await Car.findAll();
+
+        res.status(200).json({
+            data: {
+                cars: cars
+            }
+        });
+
+    } catch (err) {
+        if (!err.statuscode) {
+            console.log(err);
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
 
 exports.getById = async (req, res, next) => {
     const { id } = req.params;
@@ -44,8 +59,6 @@ exports.getById = async (req, res, next) => {
 exports.getByCity = async (req, res, next) => {
     const { city } = req.query;
     let foundedCars = [];
-
-    console.log(city);
 
     try {
         const sql = `SELECT * FROM cars WHERE rentalShopIdShop IN (SELECT id_shop FROM rental_shops WHERE rental_shops.city LIKE $1)`

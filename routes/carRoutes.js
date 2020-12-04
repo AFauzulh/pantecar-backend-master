@@ -8,6 +8,7 @@ const fh = new FileUploadHelper()
 
 const haveRentalShop = require('../middleware/rentalShop-auth');
 
+router.get('/cars', carAPI.getAll)
 router.get('/:id', carAPI.getById)
 router.get('/', carAPI.getByCity)
 
