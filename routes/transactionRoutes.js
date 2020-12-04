@@ -10,6 +10,7 @@ const isUserAuth = require('../middleware/user-auth');
 const haveRentalShop = require('../middleware/rentalShop-auth');
 
 router.get('/unverified', haveRentalShop, transactionAPI.getUnverifiedTransactions);
+router.get('/transactions', haveRentalShop, transactionAPI.getByRentalShop);
 
 router.post('/', isUserAuth, transactionAPI.makeTransaction);
 router.post('/verify', haveRentalShop, transactionAPI.verifyTransaction);
