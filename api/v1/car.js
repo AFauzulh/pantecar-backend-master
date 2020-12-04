@@ -1,4 +1,8 @@
+const { json } = require('body-parser');
 const fs = require('fs');
+
+const { Op, QueryTypes } = require('sequelize');
+const { sequelize } = require('../../database/database');
 
 const Car = require('../../models/Car');
 const CarImageUrl = require('../../models/CarImageUrl');
@@ -37,6 +41,32 @@ exports.getById = async (req, res, next) => {
     }
 };
 
+exports.getByLocation = async (req, res, next) => {
+    const { location } = req.query;
+    let foundedCars = [];
+
+    try {
+        const sql = `SELECT * FROM cars WHERE rentalShopIdShop IN (SELECT id_shop FROM rental_shops WHERE rental_shops.city LIKE $1)`
+        const [cars, _] = await sequelize.query(sql, {
+            bind: [location]
+        });
+
+        foundedCars = JSON.parse(JSON.stringify(cars));
+        res.status(200).json({
+            data: {
+                cars: foundedCars
+            }
+        });
+
+    } catch (err) {
+        if (!err.statuscode) {
+            console.log(err);
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
+
 exports.addCar = async (req, res, next) => {
     const {
         carName, carBrand, numberPlate, carType, carTransmission, numberOfSeat, fuelType, farePerDay
@@ -45,7 +75,6 @@ exports.addCar = async (req, res, next) => {
     const { rentalShopId } = req;
 
     const carImages = req.files.images;
-    // const carImgs = [];
 
     try {
         const rentalShop = await RentalShop.findByPk(rentalShopId);
