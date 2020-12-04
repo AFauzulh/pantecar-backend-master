@@ -36,8 +36,12 @@ exports.getById = async (req, res, next) => {
             throw error;
         }
 
-        const carImageUrls = await CarImageUrl.findAll({
+        let carImageUrls = await CarImageUrl.findAll({
             where: { carIdCar: foundedCar.id_car }
+        });
+
+        carImageUrls = carImageUrls.map(cImg => {
+            return cImg.imageUrl
         });
 
         res.status(200).json({
