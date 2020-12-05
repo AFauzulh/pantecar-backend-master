@@ -61,13 +61,13 @@ exports.getById = async (req, res, next) => {
 };
 
 exports.getByCity = async (req, res, next) => {
-    const { city } = req.query;
+    const { city, carName } = req.query;
     let foundedCars = [];
 
     try {
-        const sql = `SELECT * FROM cars WHERE rentalShopIdShop IN (SELECT id_shop FROM rental_shops WHERE rental_shops.city LIKE $1)`
+        const sql = `SELECT * FROM cars WHERE rentalShopIdShop IN (SELECT id_shop FROM rental_shops WHERE rental_shops.city LIKE ? OR cars.car_name LIKE ?)`;
         const [cars, _] = await sequelize.query(sql, {
-            bind: [city]
+            replacements: [(`%${city}%` || ''), (`%${carName}%` || '')]
         });
 
         foundedCars = JSON.parse(JSON.stringify(cars));
