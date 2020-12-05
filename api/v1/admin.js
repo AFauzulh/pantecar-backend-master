@@ -110,7 +110,7 @@ exports.verifyRentalShop = async (req, res, next) => {
         const foundedAdmin = await Admin.findByPk(adminId);
 
         if (!foundedRentalShop) {
-            const error = new Error("user not found !");
+            const error = new Error("rental shop not found !");
             error.statusCode = 404;
             console.log(error);
             throw error;
@@ -173,14 +173,6 @@ exports.getUnverifiedRentalShops = async (req, res, next) => {
     try {
         const unverifiedRentalShops = await RentalShop.findAll({
             where: { is_verified: false }, raw: true
-        });
-
-        console.log(unverifiedRentalShops);
-
-        unverifiedRentalShops.map(async (uvr) => {
-            const owner = await User.findByPk(uvr.userIdUser, { raw: true });
-            console.log(owner);
-            uvr = { ...uvr, ownerName: owner.user_name }
         });
 
         for (let i = 0; i < unverifiedRentalShops.length; i++) {

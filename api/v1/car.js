@@ -6,7 +6,15 @@ const RentalShop = require('../../models/RentalShop');
 
 exports.getAll = async (req, res, next) => {
     try {
-        const cars = await Car.findAll();
+        const cars = await Car.findAll({ raw: true });
+
+        for (let i = 0; i < cars.length; i++) {
+            const carImagePreviewUrl = await CarImageUrl.findOne({ where: { carIdCar: cars[i].id_car }, raw: true });
+            const carRentalShop = await RentalShop.findByPk(cars[i].rentalShopIdShop, { raw: true });
+            console.log(carRentalShop);
+            cars[i].imagePreviewUrl = carImagePreviewUrl.imageUrl;
+            cars[i].rentalShopName = carRentalShop.name;
+        }
 
         res.status(200).json({
             data: {
