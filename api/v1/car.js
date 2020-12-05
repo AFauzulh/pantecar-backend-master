@@ -60,7 +60,7 @@ exports.getById = async (req, res, next) => {
     }
 };
 
-exports.getByCity = async (req, res, next) => {
+exports.getByCityOrCarName = async (req, res, next) => {
     const { city, carName } = req.query;
     let foundedCars = [];
 

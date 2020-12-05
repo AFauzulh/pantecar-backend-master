@@ -10,7 +10,7 @@ const haveRentalShop = require('../middleware/rentalShop-auth');
 
 router.get('/cars', carAPI.getAll)
 router.get('/:id', carAPI.getById)
-router.get('/', carAPI.getByCity)
+router.get('/', carAPI.getByCityOrCarName)
 
 router.post('/', haveRentalShop, fh.getMulter().fields([
     { name: 'images', maxCount: 5 }
