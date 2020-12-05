@@ -9,6 +9,7 @@ class ModelBuilder {
     constructor() {
         Admin.hasMany(User);
         User.hasOne(RentalShop);
+        Admin.hasMany(RentalShop);
         RentalShop.hasMany(Car);
         Car.hasMany(CarImageUrl);
         Admin.hasMany(Car);
