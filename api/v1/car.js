@@ -14,6 +14,8 @@ exports.getAll = async (req, res, next) => {
             console.log(carRentalShop);
             cars[i].imagePreviewUrl = carImagePreviewUrl.imageUrl;
             cars[i].rentalShopName = carRentalShop.name;
+            cars[i].city = carRentalShop.city;
+            cars[i].province = carRentalShop.province;
         }
 
         res.status(200).json({
