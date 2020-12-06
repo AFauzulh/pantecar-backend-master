@@ -19,6 +19,25 @@ exports.getAll = async (req, res, next) => {
     }
 }
 
+exports.getById = async (req, res, next) => {
+    const { id } = req.params;
+    try {
+        const rentalShop = await RentalShop.findByPk(id, { raw: true });
+
+        res.status(200).json({
+            data: {
+                rentalShop: rentalShop
+            }
+        });
+
+    } catch (err) {
+        if (!err.statuscode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
+
 exports.registerRentalShop = async (req, res, next) => {
     const { name, address, city, province, bank, bankAccountNo } = req.body;
     const { userId } = req;
