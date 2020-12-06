@@ -38,6 +38,27 @@ exports.getById = async (req, res, next) => {
     }
 }
 
+exports.getByUserId = async (req, res, next) => {
+    const { userId } = req;
+    try {
+        const rentalShop = await RentalShop.findOne({
+            where: { userIdUser: userId }, raw: true
+        });
+
+        res.status(200).json({
+            data: {
+                rentalShop: rentalShop
+            }
+        });
+
+    } catch (err) {
+        if (!err.statuscode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+}
+
 exports.registerRentalShop = async (req, res, next) => {
     const { name, address, city, province, bank, bankAccountNo } = req.body;
     const { userId } = req;
