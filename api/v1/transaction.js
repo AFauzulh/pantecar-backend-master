@@ -146,12 +146,12 @@ exports.verifyTransaction = async (req, res, next) => {
             throw error;
         }
 
-        if (!transaction.is_accepted) {
-            const error = new Error("Can't verify unaccepted transaction");
-            error.statusCode = 401;
-            console.log(error);
-            throw error;
-        }
+        // if (!transaction.is_accepted) {
+        //     const error = new Error("Can't verify unaccepted transaction");
+        //     error.statusCode = 401;
+        //     console.log(error);
+        //     throw error;
+        // }
 
         if (transaction.is_verified) {
             const error = new Error("transaction has already verified");
