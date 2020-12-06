@@ -11,7 +11,6 @@ exports.getAll = async (req, res, next) => {
         for (let i = 0; i < cars.length; i++) {
             const carImagePreviewUrl = await CarImageUrl.findOne({ where: { carIdCar: cars[i].id_car }, raw: true });
             const carRentalShop = await RentalShop.findByPk(cars[i].rentalShopIdShop, { raw: true });
-            console.log(carRentalShop);
             cars[i].imagePreviewUrl = carImagePreviewUrl.imageUrl;
             cars[i].rentalShopName = carRentalShop.name;
             cars[i].city = carRentalShop.city;
@@ -37,7 +36,7 @@ exports.getById = async (req, res, next) => {
     const { id } = req.params;
 
     try {
-        const foundedCar = await Car.findByPk(id);
+        const foundedCar = await Car.findByPk(id, { raw: true });
 
         if (!foundedCar) {
             const error = new Error("car not found");
@@ -53,6 +52,11 @@ exports.getById = async (req, res, next) => {
         carImageUrls = carImageUrls.map(cImg => {
             return cImg.imageUrl
         });
+
+        const carRentalShop = await RentalShop.findByPk(foundedCar.rentalShopIdShop, { raw: true });
+        foundedCar.rentalShopName = carRentalShop.name;
+        foundedCar.city = carRentalShop.city;
+        foundedCar.province = carRentalShop.province;
 
         res.status(200).json({
             data: {
